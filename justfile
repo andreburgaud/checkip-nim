@@ -9,6 +9,7 @@ default:
 clean:
     -rm -rf {{BUILD_DIR}}
     -rm -rf tmp
+    -rm tests/test_{{APP}}
 
 # Debug build
 build:
@@ -24,8 +25,12 @@ release:
 run: build
     build/checkip
 
-# Test a few options via the CLI
+# Run unittests Test a few options via the CLI
 test: build
+    nimble --verbose test
+
+# Test a few options via the CLI
+samples: build
     build/checkip
     build/checkip --help
     build/checkip -h
