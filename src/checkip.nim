@@ -3,7 +3,7 @@ import os, parseopt, std/strformat, httpclient, strutils, terminal
 const
   DEFAULT_CHECKIP_URL = "https://checkip.amazonaws.com"
 
-proc appName: string =
+proc appName*: string =
   ## Extract the program name from the command line
   splitFile(getAppFilename())[1]
 
@@ -19,7 +19,7 @@ proc writeHelp =
   ## Print the usage
   printInfo "Usage: $1" % appName()
 
-proc userAgent(url: string): string =
+proc userAgent*(url: string): string =
   ## Create a user agent string. To use ifconfig.co, need to create 
   ## a pseudo useragent so that the server returns only the IP address.
   const NimblePkgVersion {.strdefine.} = "Unknown"
