@@ -70,3 +70,8 @@ $ curl https://checkip.amazonaws.com
 $ curl https://ifconfig.co
 66.249.73.63
 ```
+
+## Resources
+
+* https://github.com/mpolden/echoip
+* https://ifconfig.co/
