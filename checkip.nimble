@@ -1,7 +1,7 @@
 # Package
 
 version       = "0.2.0"
-author        = "Andre"
+author        = "Andre Burgaud"
 description   = "Check public IP address"
 license       = "MIT"
 srcDir        = "src"
