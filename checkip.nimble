@@ -1,6 +1,7 @@
-# Package
+import std/strformat
 
-version       = "0.2.0"
+# Package
+version       = "0.3.0"
 author        = "Andre Burgaud"
 description   = "Check public IP address"
 license       = "MIT"
@@ -10,3 +11,17 @@ bin           = @["checkip"]
 
 # Dependencies
 requires "nim >= 1.6.10"
+
+
+task check_version, "Display the application version":
+    ## Validate that the version in fthe nimble file
+    ## is the same as the version in the justfile
+    ## It is executed by just during the release of a distribution
+    echo fmt"Nimble version  : {version}"
+    let lines = readLines("justfile", 5)
+    for line in lines:
+        if line.startswith("VERSION"):
+            let justVersion = multiReplace(line.split("=")[1].strip(), ("\"", ""))
+            echo fmt"Justfile version: {justVersion}"
+            doAssert version == justVersion, "Versions don't match between nimble file and justfile"
+            return

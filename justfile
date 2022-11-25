@@ -1,13 +1,17 @@
 BUILD_DIR := "build"
+DIST_DIR := "dist"
 APP := "checkip"
+VERSION := "0.3.0"
 
 # Default recipe (this list)
 default:
+    @echo "OS: {{os()}}, OS Family: {{os_family()}}, architecture: {{arch()}}"
     @just --list
 
 # Clean binaries
 clean:
     -rm -rf {{BUILD_DIR}}
+    -rm -rf {{DIST_DIR}}
     -rm -rf tmp
     -rm tests/test_{{APP}}
 
@@ -15,11 +19,20 @@ clean:
 build:
     nimble build -d:ssl
 
+# Check version
+version:
+    nimble check_version
+
 # Release build
-release:
+release: test clean version
     nimble build -d:ssl -d:release
     strip {{BUILD_DIR}}/{{APP}}
     upx {{BUILD_DIR}}/{{APP}}
+
+# Zip a package to push as a release to github
+dist: release
+    -mkdir {{DIST_DIR}}
+    zip -j {{DIST_DIR}}/{{APP}}_{{os()}}_{{arch()}}_{{VERSION}}.zip {{BUILD_DIR}}/{{APP}}
 
 # Run checkip
 run: build
@@ -42,3 +55,7 @@ samples: build
     build/checkip -u=https://ifconfig.co
     build/checkip -v -u=https://ifconfig.co
 
+push:
+    git push
+    git tag -a {{VERSION}} -m 'Version {{Version}}'
+    git push origin --tags
