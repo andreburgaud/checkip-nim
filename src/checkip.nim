@@ -1,23 +1,8 @@
-import os, parseopt, std/strformat, httpclient, strutils, terminal
+import parseopt, std/strformat, httpclient, strutils
+import usage
 
 const
   DEFAULT_CHECKIP_URL = "https://checkip.amazonaws.com"
-
-proc appName*: string =
-  ## Extract the program name from the command line
-  splitFile(getAppFilename())[1]
-
-proc printInfo(msg: string) =
-  ## Print information styled text to the terminal (typically yellow)
-  styledEcho fgYellow, styleBright, msg
-
-proc printSuccess(msg: string) =
-  ## Print success styled text to the terminal (typically green)
-  styledEcho fgGreen, styleBright, msg
-
-proc writeHelp =
-  ## Print the usage
-  printInfo "Usage: $1" % appName()
 
 proc userAgent*(url: string): string =
   ## Create a user agent string. To use ifconfig.co, need to create 
@@ -28,11 +13,6 @@ proc userAgent*(url: string): string =
       return fmt"curl/{NimblePkgVersion}"
   fmt"{appName()}/{NimblePkgVersion}"
 
-proc writeVersion =
-  ## Print the version
-  const NimblePkgVersion {.strdefine.} = "Unknown"
-  printInfo "$1 $2" % [appName(), NimblePkgVersion]
-
 proc main =
   ## Application entrypoint
   var checkUrl = DEFAULT_CHECKIP_URL
@@ -41,10 +21,10 @@ proc main =
   for kind, key, val in getopt():
     case kind
     of cmdArgument:
-      writeHelp(); return
+      printUsage(); return
     of cmdLongOption, cmdShortOption:
       case key
-      of "help", "h": writeHelp(); return
+      of "help", "h": printUsage(); return
       of "version", "V": writeVersion(); return
       of "verbose", "v": isVerbose = true
       of "url", "u": checkUrl = val

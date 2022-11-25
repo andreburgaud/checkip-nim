@@ -1,7 +1,7 @@
 BUILD_DIR := "build"
 DIST_DIR := "dist"
 APP := "checkip"
-VERSION := "0.3.0"
+VERSION := "0.4.0"
 
 # Default recipe (this list)
 default:
@@ -34,16 +34,12 @@ dist: release
     -mkdir {{DIST_DIR}}
     zip -j {{DIST_DIR}}/{{APP}}_{{os()}}_{{arch()}}_{{VERSION}}.zip {{BUILD_DIR}}/{{APP}}
 
-# Run checkip
-run: build
-    build/checkip
-
 # Run unittests Test a few options via the CLI
 test: build
     nimble --verbose test
 
 # Test a few options via the CLI
-samples: build
+run: build
     build/checkip
     build/checkip --help
     build/checkip -h
@@ -57,5 +53,5 @@ samples: build
 
 push:
     git push
-    git tag -a {{VERSION}} -m 'Version {{Version}}'
+    git tag -a {{VERSION}} -m 'Version {{VERSION}}'
     git push origin --tags

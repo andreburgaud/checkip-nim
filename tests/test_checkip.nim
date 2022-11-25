@@ -1,6 +1,7 @@
 import unittest
 import std/strutils
 import checkip
+import usage
 
 test "user agent with https://ifconfig.co/":
     let a = userAgent("https://ifconfig.co/")
