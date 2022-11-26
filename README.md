@@ -1,8 +1,8 @@
 # CheckIP
 
-If you are connected to the internet, `checkip` display your current IP address.
+If you are connected to the internet, `checkip` displays your current IP address.
 By default, it fetches this information from https://checkip.amazonaws.com, but you can
-supply a different site, for example, https://ifconfig.co/.
+supply a different site, for example, https://ifconfig.co/ or https://api64.ipify.org.
 
 I built this tool to retrieve a machine's current external IP address programmatically, but there are other alternatives using tools possibly installed on your devices. See section **Alternatives** for examples.
 
@@ -21,6 +21,13 @@ You can use the `url` option to supply a site that will return you IP address:
 
 ```
 $ checkip --url=https://ifconfig.co
+66.249.73.63
+```
+
+Or:
+
+```
+$ checkip --url=https://api64.ipify.org
 66.249.73.63
 ```
 
