@@ -43,7 +43,7 @@ windist: release
     powershell -Command "Compress-Archive -Path '{{BUILD_DIR}}/{{APP_BIN}}' -DestinationPath '{{DIST_DIR}}/{{APP}}_{{os()}}_{{arch()}}_{{VERSION}}.zip'"
 
 # Run unittests Test a few options via the CLI
-test: build
+test:
     nimble --verbose test
 
 # Test a few options via the CLI
