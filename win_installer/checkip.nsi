@@ -81,7 +81,6 @@ ${INSTALL_TYPE}
 SetOverwrite ifnewer
 SetOutPath "$INSTDIR"
 File "..\build\checkip.exe"
-File ".\files\libcrypto-1_1-x64.dll"
 SectionEnd
 
 ######################################################################
