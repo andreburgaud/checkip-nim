@@ -1,7 +1,7 @@
 import std/strformat
 
 # Package
-version       = "0.4.0"
+version       = "0.5.0"
 author        = "Andre Burgaud"
 description   = "Check public IP address"
 license       = "MIT"
@@ -10,8 +10,8 @@ binDir        = "build"
 bin           = @["checkip"]
 
 # Dependencies
-requires "nim >= 1.6.10"
-
+requires "nim >= 2.0.0"
+requires "ndns >= 0.1.2"
 
 task check_version, "Display the application version":
     ## Validate that the version in fthe nimble file

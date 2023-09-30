@@ -1,4 +1,4 @@
-import os, strutils, system, terminal
+import std/[os, strutils, terminal]
 
 const
   COPYRIGHT = "Copyright (C) 2022 - Andre Burgaud"
@@ -16,6 +16,10 @@ proc printSuccess*(msg: string) =
   ## Print success styled text to the terminal (typically green)
   styledEcho fgGreen, styleBright, msg
 
+proc printError*(msg: string) =
+  ## Print error styled text to the terminal (typically red)
+  styledEcho fgRed, styleBright, msg
+
 proc version: string =
     const NimblePkgVersion {.strdefine.} = "Unknown"
     NimblePkgVersion
@@ -29,7 +33,10 @@ proc printHeader =
 proc printUsageOption(shortOpt: string, longOpt: string, description: string) =
   ## For the usage, print a line for a given option
   let displayLongOpt = longOpt & spaces(max(0, SPACES - longOpt.len))
-  writeStyled "  $1, $2" % [shortOpt, displayLongOpt]
+  if shortOpt.len > 0:
+    writeStyled "  $1, $2" % [shortOpt, displayLongOpt]
+  else:
+    writeStyled "      $1" % [displayLongOpt]
   echo description
 
 proc printDescription =
@@ -42,9 +49,10 @@ proc printOptions =
   ## Print all the options descriptions for the usage
   styledEcho fgYellow, styleBright, "Options:"
   printUsageOption("-h", "--help", "Display this help and exit")
-  printUsageOption("-u", "--url", "Point to a custom check IP address service (default: https://checkip.amazonaws.com)")
   printUsageOption("-v", "--verbose", "Show traces during execution")
   printUsageOption("-V", "--version", "Output version information and exit")
+  printUsageOption("", "--dns", "Uses DNS (default)")
+  printUsageOption("", "--http", "Uses HTTP")
 
 proc printExamples =
   ## Print all the options descriptions for the usage
@@ -52,7 +60,8 @@ proc printExamples =
   echo """  $1
   $1 --help
   $1 --version
-  $1 --url=https://ifconfig.co""" % appName()
+  $1 --http
+  $1 --dns""" % appName()
 
 proc printUsage* =
   ## Display usage for this application

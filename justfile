@@ -21,7 +21,10 @@ clean:
 
 # Debug build
 build:
+    # resolver1.opendns.com IP: 208.67.222.222
+    #nimble build -d:ndnsUseResolver:208.67.222.222 -d:ssl
     nimble build -d:ssl
+
 
 # Check version
 version:
