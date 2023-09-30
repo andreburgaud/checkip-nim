@@ -1,8 +1,7 @@
 # CheckIP
 
-If you are connected to the internet, `checkip` displays your current IP address.
-By default, it fetches this information from https://checkip.amazonaws.com, but you can
-supply a different site, for example, https://ifconfig.co/ or https://api64.ipify.org.
+If you are connected to the internet, `checkip` displays your external IP address.
+By default, it uses `DNS` to fetch this information. If you pass an `--http` flag, it will use `HTTP`. `DNS` is a faster option than `HTTP`.
 
 I built this tool to retrieve a machine's current external IP address programmatically, but there are other alternatives using tools possibly installed on your devices. See section **Alternatives** for examples.
 
@@ -10,28 +9,38 @@ I built this tool to retrieve a machine's current external IP address programmat
 
 ### Display your IP Address
 
-Without any arguments, `checkip` fetches your current IP address from https://checkip.amazonaws.com:
+Without any arguments, `checkip` fetches your external IP address:
 
 ```
-$ checkip
+checkip
 66.249.73.63
 ```
 
-You can use the `url` option to supply a site that will return you IP address:
+By default, it uses `DNS` and is the equivalent of running:
 
 ```
-$ checkip --url=https://ifconfig.co
+dig +short myip.opendns.com @resolver1.opendns.com
 66.249.73.63
 ```
 
-Or:
+
+You can use the `--url` option to use `HTTP` instead of `DNS`:
 
 ```
-$ checkip --url=https://api64.ipify.org
+$ checkip --http
+66.249.73.63
+```
+
+It is the equivalent of running:
+
+```
+curl https://checkip.amazonaws.com
 66.249.73.63
 ```
 
 ## Build
+
+* Requires Nim 2.0.0
 
 ### Debug
 
@@ -52,33 +61,41 @@ Optionally, to reduce the size further:
 $ upx checkip
 ```
 
-## Known Problems
-
-* Requires Nim 1.6.10 with OpenSSL 3 support to work in environment with OpenSSL 3
-* https://nim-lang.org/blog/2022/11/23/version-1610-released.html
-* https://www.mail-archive.com/nim-general@lists.nim-lang.org/msg19309.html
-
 # Alternatives
 
 ## wget
 
 ```
-$ wget -O- -q https://checkip.amazonaws.com
+wget -O- -q https://checkip.amazonaws.com
 66.249.73.63
-$ wget -O- -q https://ifconfig.co 
+```
+
+```
+wget -O- -q https://ifconfig.co
 66.249.73.63
 ```
 
 ## curl
 
 ```
-$ curl https://checkip.amazonaws.com
-66.249.73.63
-$ curl https://ifconfig.co
+curl https://checkip.amazonaws.com
 66.249.73.63
 ```
 
-## Resources
+```
+curl https://ifconfig.co
+66.249.73.63
+```
+
+## dig
+
+```
+dig +short myip.opendns.com @resolver1.opendns.com
+66.249.73.63
+```
+
+
+# Resources
 
 * https://github.com/mpolden/echoip
 * https://ifconfig.co/
