@@ -10,7 +10,7 @@ const
 proc httpQuery(isVerbose: bool) =
   ## Check external IP address via HTTP
   if isVerbose:
-    echo &"Check URL: {CHECKIP_HTTP}"
+    echo &">>> Check URL: {CHECKIP_HTTP}"
 
   var client = newHttpClient(timeout = 1000)
   let ip = client.getContent CHECKIP_HTTP
@@ -19,7 +19,7 @@ proc httpQuery(isVerbose: bool) =
 proc dnsQuery(isVerbose: bool) =
   ## Check external IP address via DNS
   if isVerbose:
-    echo &"Check DNS: {CHECKIP_DNS}"
+    echo &">>> Check DNS: {CHECKIP_DNS}"
 
   let client = initDnsClient(ip=CHECKIP_DNS)
   let ips = resolveIpv4(client, "myip.opendns.com")

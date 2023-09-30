@@ -1,7 +1,7 @@
-import std/[os, strutils, terminal]
+import std/[os, strformat, strutils, terminal]
 
 const
-  COPYRIGHT = "Copyright (C) 2022 - Andre Burgaud"
+  COPYRIGHT = "Copyright (C) 2022-2023 - Andre Burgaud"
   SPACES = 10
 
 proc appName*: string =
@@ -27,16 +27,16 @@ proc version: string =
 proc printHeader =
   ## Display centered information about the application
   let width = terminalWidth()
-  styledEcho fgGreen, center("$1 v$2" % [appName(), version()], width - 10)
+  styledEcho fgGreen, center(&"{appName()} {version()}", width - 10)
   styledEcho fgGreen, center(COPYRIGHT, width - 10)
 
 proc printUsageOption(shortOpt: string, longOpt: string, description: string) =
   ## For the usage, print a line for a given option
   let displayLongOpt = longOpt & spaces(max(0, SPACES - longOpt.len))
   if shortOpt.len > 0:
-    writeStyled "  $1, $2" % [shortOpt, displayLongOpt]
+    writeStyled &"  {shortOpt}, {displayLongOpt}"
   else:
-    writeStyled "      $1" % [displayLongOpt]
+    writeStyled &"      {displayLongOpt}"
   echo description
 
 proc printDescription =
@@ -69,7 +69,7 @@ proc printUsage* =
   printHeader()
   printDescription()
   styledEcho fgYellow, styleBright, "Usage:"
-  echo "  $1 [OPTIONS]" % appName()
+  echo &"  {appName()} [OPTIONS]"
   echo()
   printOptions()
   echo()
@@ -78,5 +78,5 @@ proc printUsage* =
 
 proc writeVersion* =
   ## Print the version
-  printInfo "$1 $2" % [appName(), version()]
+  printInfo &"{appName()} {version()}"
 
