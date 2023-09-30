@@ -3,7 +3,7 @@ DIST_DIR := "dist"
 APP := "checkip"
 APP_BIN := if os() == "windows" { APP + ".exe" } else { APP }
 
-VERSION := "0.4.0"
+VERSION := "0.5.0"
 
 # Default recipe (this list)
 default:
