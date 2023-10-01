@@ -12,7 +12,7 @@ proc httpQuery(isVerbose: bool) =
   if isVerbose:
     echo &">>> Check URL: {CHECKIP_HTTP}"
 
-  var client = newHttpClient(timeout = 1000)
+  var client = newHttpClient(timeout=1000)
   let ip = client.getContent CHECKIP_HTTP
   printSuccess strip(ip)
 
