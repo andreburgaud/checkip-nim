@@ -22,7 +22,7 @@ proc dnsQuery(isVerbose: bool) =
     echo &">>> Check DNS: {CHECKIP_DNS}"
 
   let client = initDnsClient(ip=CHECKIP_DNS)
-  let ips = resolveIpv4(client, "myip.opendns.com")
+  let ips = resolveIpv4(client, domain="myip.opendns.com", timeout=1000)
   if ips.len > 0:
     printSuccess strip(ips[0])
   else:
